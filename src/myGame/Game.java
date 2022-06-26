@@ -14,7 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Game extends JPanel implements Runnable, KeyListener {
+public class Game extends JPanel implements  KeyListener, ActionListener {
 	private Double width;
 	private Double height;
 	int lives = 5;
@@ -33,6 +33,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
 
 	Double narutoXPosition = 0.02;
 	Double sasukeXPosition = 0.86;
+	private Timer timer = new Timer(5, this);
 
 	public Game(JFrame screen, Double width, Double height) throws Exception {
 		this.width = width;
@@ -64,37 +65,9 @@ public class Game extends JPanel implements Runnable, KeyListener {
 		sasuke.setSpeedX(2);
 		sasuke.setSpeedY(1);
 		sasuke.setSpeedRate(2);
-		Thread thread = new Thread(this);
-		thread.start();
-	}
-
-	@Override
-	public void run() {
-		long initialTime = System.currentTimeMillis();
-		double framesPerSecond = 60.0;
-		double fractionOfSecondsPerFrame = 1000 / framesPerSecond;
-		int frames = 0;
-		double timer = System.currentTimeMillis();
-		double delta = 0;
-
-		while (true) {
-			if (pause == false) {
-				long currentTime = System.currentTimeMillis();
-				delta += (currentTime - initialTime) / fractionOfSecondsPerFrame;
-				if (delta >= 1) {
-					updateGame();
-					repaint();
-					frames++;
-					delta = 0;
-				}
-				initialTime = currentTime;
-				if (System.currentTimeMillis() - timer >= 1000) {
-					System.out.println("FPS: " + frames);
-					frames = 0;
-					timer += 1000;
-				}
-			}
-		}
+		
+		timer.setInitialDelay(100);
+		timer.start();
 	}
 
 	public void updateGame() {
@@ -286,14 +259,6 @@ public class Game extends JPanel implements Runnable, KeyListener {
 		}
 	}
 
-	public void FPS() {
-		try {
-			Thread.sleep(1000 / 60);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
@@ -361,5 +326,11 @@ public class Game extends JPanel implements Runnable, KeyListener {
 			naruto.setMovingUp(false);
 		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 			naruto.setMovingDown(false);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		updateGame();
+		repaint();		
 	}
 }
