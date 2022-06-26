@@ -1,9 +1,5 @@
 package myGame;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,9 +10,13 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class Main extends JPanel implements Runnable, KeyListener {
     static Double width = 1360.0;
@@ -307,18 +307,20 @@ public class Main extends JPanel implements Runnable, KeyListener {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+
         try {
-            background.drawImage(g);
-            naruto.drawImage(g);
-            drawLives(g);
-            drawScore(g);
-            sasuke.drawImage(g);
+            background.drawImage(g2d);
+            naruto.drawImage(g2d);
+            drawLives(g2d);
+            drawScore(g2d);
+            sasuke.drawImage(g2d);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void drawLives(Graphics g) throws Exception {
+    public void drawLives(Graphics2D g) throws Exception {
         for (int i = 0; i <= lives - 1; i++) {
             life.setXPosition(Double.valueOf(60 + 25 * i));
             life.drawImage(g);
