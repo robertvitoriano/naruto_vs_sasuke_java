@@ -66,7 +66,7 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 		sasuke.setSpeedY(0.5);
 		sasuke.setSpeedRate(2.0);
 		
-		timer.setInitialDelay(100);
+		timer.setInitialDelay(0);
 		timer.start();
 	}
 
