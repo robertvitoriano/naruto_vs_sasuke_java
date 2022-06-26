@@ -264,6 +264,9 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 
 		try {
+			if(background == null){
+				return;
+			}
 			background.drawImage(g2d);
 			naruto.drawImage(g2d);
 			drawLives(g2d);
