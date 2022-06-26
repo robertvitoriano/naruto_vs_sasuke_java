@@ -79,19 +79,32 @@ public class Main extends JPanel implements Runnable, KeyListener {
         thread.start();
     }
 
+    @Override
     public void run() {
+        long initialTime = System.currentTimeMillis();
+        double framesPerSecond = 60.0;
+        double fractionOfSecondsPerFrame = 1000 / framesPerSecond;
+        int frames = 0;
+        double timer = System.currentTimeMillis();
+        double delta = 0;
+
         while (true) {
             if (pause == false) {
-                long startTime = System.currentTimeMillis();
-                updateGame();
-                repaint();
-                FPS();
-                long finalTime = System.currentTimeMillis();
-                long FPS = 1000 / (finalTime - startTime);
-                System.out.println("FPS: " + FPS);
-                System.out.println("Rodando");
-            } else
-                System.out.println("Pausado");
+                long currentTime = System.currentTimeMillis();
+                delta += (currentTime - initialTime) / fractionOfSecondsPerFrame;
+                if (delta >= 1) {
+                    updateGame();
+                    repaint();
+                    frames++;
+                    delta = 0;
+                }
+                initialTime = currentTime;
+                if (System.currentTimeMillis() - timer >= 1000) {
+                    System.out.println("FPS: " + frames);
+                    frames = 0;
+                    timer += 1000;
+                }
+            }
         }
     }
 
