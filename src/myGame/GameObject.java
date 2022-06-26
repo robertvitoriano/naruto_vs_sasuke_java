@@ -16,34 +16,33 @@ public class GameObject extends JPanel {
   Double yPosition;
   Double width;
   Double height;
-  int speed = 4;
-  int size = 0;
-  int speedRate = 1;
-  int speedX = 0;
-  int speedY = 0;
-
-  public int getSpeedAbsoluteX() {
-    return speedAbsoluteX;
-  }
-
-  public void setSpeedAbsoluteX(int speedAbsoluteX) {
-    this.speedAbsoluteX = speedAbsoluteX;
-  }
-
-  public int getSpeedAbsoluteY() {
-    return SpeedAbsoluteY;
-  }
-
-  public void setSpeedAbsoluteY(int speedAbsoluteY) {
-    SpeedAbsoluteY = speedAbsoluteY;
-  }
-
-  int speedAbsoluteX = 0;
-  int SpeedAbsoluteY = 0;
+  Double speed = 4.0;
+  Double size = 0.0;
+  Double speedRate = 1.0;
+  Double speedX = 0.0;
+  Double speedY = 0.0;
+  Double speedAbsoluteX = 0.0;
+  Double SpeedAbsoluteY = 0.0;
   boolean movingDown;
   boolean movingUp;
   boolean movingLeft;
   boolean movingRight;
+
+  public Double getSpeedAbsoluteX() {
+    return speedAbsoluteX;
+  }
+
+  public void setSpeedAbsoluteX(Double speedAbsoluteX) {
+    this.speedAbsoluteX = speedAbsoluteX;
+  }
+
+  public Double getSpeedAbsoluteY() {
+    return SpeedAbsoluteY;
+  }
+
+  public void setSpeedAbsoluteY(Double speedAbsoluteY) {
+    SpeedAbsoluteY = speedAbsoluteY;
+  }
 
   public GameObject(String imagePath,
       Double xPosition,
@@ -80,27 +79,27 @@ public class GameObject extends JPanel {
     this.imagePath = imagePath;
   }
 
-  public int getSpeedX() {
+  public Double getSpeedX() {
     return speedX;
   }
 
-  public void setSpeedX(int speedX) {
+  public void setSpeedX(Double speedX) {
     this.speedX = speedX;
   }
 
-  public int getSpeedY() {
+  public Double getSpeedY() {
     return speedY;
   }
 
-  public void setSpeedY(int speedY) {
+  public void setSpeedY(Double speedY) {
     this.speedY = speedY;
   }
 
-  public int getComponentSize() {
+  public Double getComponentSize() {
     return size;
   }
 
-  public void setSize(int size) {
+  public void setSize(Double size) {
     this.size = size;
   }
 
@@ -120,7 +119,7 @@ public class GameObject extends JPanel {
     this.movingRight = movingRight;
   }
 
-  public int getSpeedRate() {
+  public Double getSpeedRate() {
     return speedRate;
   }
 
@@ -149,7 +148,7 @@ public class GameObject extends JPanel {
     this.movingUp = MovingUp;
   }
 
-  public void setSpeedRate(int SpeedRate) {
+  public void setSpeedRate(Double SpeedRate) {
     this.speedRate = SpeedRate;
   }
 
@@ -177,7 +176,7 @@ public class GameObject extends JPanel {
     this.yPosition = YPosition;
   }
 
-  public void setSpeed(int speed) {
+  public void setSpeed(Double speed) {
     this.speed = speed;
   }
 
@@ -193,7 +192,7 @@ public class GameObject extends JPanel {
     this.height = height;
   }
 
-  public int getSpeed() {
+  public Double getSpeed() {
     return speed;
   }
 
@@ -213,6 +212,6 @@ public class GameObject extends JPanel {
 
   public void drawOval(Graphics2D g) {
     g.setColor(color);
-    g.fillOval((int) Math.round(xPosition), (int) Math.round(yPosition), size, size);
+    g.fillOval((int) Math.round(xPosition), (int) Math.round(yPosition), (int)Math.round(size), (int)Math.round(size));
   }
 }

@@ -33,7 +33,7 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 
 	Double narutoXPosition = 0.02;
 	Double sasukeXPosition = 0.86;
-	private Timer timer = new Timer(5, this);
+	private Timer timer = new Timer(2, this);
 
 	public Game(JFrame screen, Double width, Double height) throws Exception {
 		this.width = width;
@@ -62,9 +62,9 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 		sasuke = new GameObject("mini_sasuke.png", (width * sasukeXPosition), 190.0, 100.0, 140.0);
 
 		life = new GameObject("heart-icon.png", 0.0, 23.0, 25.0, 25.0);
-		sasuke.setSpeedX(2);
-		sasuke.setSpeedY(1);
-		sasuke.setSpeedRate(2);
+		sasuke.setSpeedX(1.0);
+		sasuke.setSpeedY(0.5);
+		sasuke.setSpeedRate(2.0);
 		
 		timer.setInitialDelay(100);
 		timer.start();
@@ -133,12 +133,12 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 		score = 0;
 		sasuke.setXPosition(450.0);
 		sasuke.setYPosition(190.0);
-		sasuke.setSpeedX(5);
-		sasuke.setSpeedY(5);
-		sasuke.setSpeedRate(2);
+		sasuke.setSpeedX(5.0);
+		sasuke.setSpeedY(5.0);
+		sasuke.setSpeedRate(2.0);
 		naruto.setXPosition(50.0);
 		naruto.setYPosition(140.0);
-		naruto.setSpeed(3);
+		naruto.setSpeed(3.0);
 		naruto.setMovingUp(false);
 		naruto.setMovingDown(false);
 	}
