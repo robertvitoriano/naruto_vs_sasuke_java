@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -197,7 +197,7 @@ public class GameObject extends JPanel {
     return speed;
   }
 
-  public void drawImage(Graphics g) throws Exception {
+  public void drawImage(Graphics2D g) throws Exception {
     try {
       if (image == null) {
         throw new Exception("Image not found");
@@ -211,7 +211,7 @@ public class GameObject extends JPanel {
     }
   }
 
-  public void drawOval(Graphics g) {
+  public void drawOval(Graphics2D g) {
     g.setColor(color);
     g.fillOval((int) Math.round(xPosition), (int) Math.round(yPosition), size, size);
   }
