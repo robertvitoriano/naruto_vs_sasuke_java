@@ -17,22 +17,25 @@ import java.awt.event.*;
 public class Game extends JPanel implements  KeyListener, ActionListener {
 	private Double width;
 	private Double height;
-	int lives = 5;
-	int initialLives = 5;
-	int bestScore;
-	int hitWallSound = 0;
-	boolean pause = false;
-	Random randomNumber = new Random();
-	int score = 0;
+	private int lives = 5;
+	private int initialLives = 5;
+	private int bestScore;
+	private int hitWallSound = 0;
+	private int score = 0;
+	private Double narutoXPosition = 0.02;
+	private Double sasukeXPosition = 0.86;
 
-	GameObject naruto;
-	GameObject sasuke;
-	GameObject life;
-	GameObject background;
-	Clip mainMusicClip;
+	private boolean pause = false;
 
-	Double narutoXPosition = 0.02;
-	Double sasukeXPosition = 0.86;
+	private Random randomNumber = new Random();
+
+	private GameObject naruto;
+	private GameObject sasuke;
+	private GameObject life;
+	private GameObject background;
+
+	private Clip mainMusicClip;
+
 	private Timer timer = new Timer(2, this);
 
 	public Game(JFrame screen, Double width, Double height) throws Exception {
@@ -80,10 +83,12 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 	}
 
 	public void narutoColision() {
-		if (naruto.getYPosition() <= 0)
-			naruto.setYPosition(0.0);
-		else if (naruto.getYPosition() >= 380)
-			naruto.setYPosition(380.0);
+		if (naruto.getYPosition() <= 0){
+			naruto.setYPosition(0.0);	
+		}
+		else if (naruto.getYPosition() >= this.height - naruto.getObjectHeight()){
+			naruto.setYPosition(this.height - naruto.getObjectHeight());
+		}
 	}
 
 	public void GameOver() {
@@ -151,8 +156,7 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 			try {
 				playSound("missedSound.wav");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					e.printStackTrace();
 			}
 		}
 	}
@@ -177,7 +181,7 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 	public void narutoSasukeCollisions() {
 		if (sasuke.getXPosition() <= naruto.getXPosition() + naruto.getObjectWidth()) {
 			if (sasuke.getYPosition() >= naruto.getYPosition()
-					&& sasuke.getYPosition() <= naruto.getYPosition() + naruto.getHeight()) {
+					&& sasuke.getYPosition() <= naruto.getYPosition() + naruto.getObjectHeight()) {
 				if (bestScore < score)
 					bestScore = score;
 				sasuke.setSpeedX(sasuke.getSpeedX() * -1);
@@ -185,11 +189,9 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 				try {
 					playSound("sasuke-screaming.wav");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+							e.printStackTrace();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+							e.printStackTrace();
 				}
 				score++;
 				naruto.setSpeed(naruto.getSpeed() + naruto.getSpeedRate());
@@ -208,33 +210,23 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 	}
 
 	public void sasukeCollisions() {
-
-		// sasuke.setXPosition(sasuke.getXPosition() + sasuke.getSpeedX());
 		sasuke.setYPosition(sasuke.getYPosition() + sasuke.getSpeedY());
 		if (sasuke.getXPosition() >= this.width - 25 || sasuke.getXPosition() <= 0) {
 			sasuke.setSpeedX(sasuke.getSpeedX() * -1);
-			// playHitWallSound();
 		}
-		if (sasuke.getYPosition() >= this.height - 50 || sasuke.getYPosition() <= 0) {
+		if (sasuke.getYPosition() >= this.height - sasuke.getObjectHeight()|| sasuke.getYPosition() <= 0) {
 			sasuke.setSpeedY(sasuke.getSpeedY() * -1);
-			// playHitWallSound();
-
 		}
 		if (sasuke.getSpeedX() < 0) {
-			sasuke.setSpeedAbsoluteX(-sasuke.getSpeedX());
-			// playHitWallSound();
+			sasuke.setSpeedAbsoluteX(sasuke.getSpeedX()* -1);
 		}
-
 		else {
 			sasuke.setSpeedAbsoluteX(sasuke.getSpeedX());
-			// playHitWallSound();
 		}
 		if (sasuke.getSpeedY() < 0) {
 			sasuke.setSpeedAbsoluteY(-sasuke.getSpeedY());
-			// playHitWallSound();
 		} else {
 			sasuke.setSpeedAbsoluteY(sasuke.getSpeedY());
-			// playHitWallSound();
 		}
 	}
 
@@ -251,10 +243,8 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 				playSound("hitWall1.wav");
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
