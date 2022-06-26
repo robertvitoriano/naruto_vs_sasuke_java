@@ -72,7 +72,7 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 
 	public void updateGame() {
 		sasukeCollisions();
-		narutosasukeCollisions();
+		narutoSasukeCollisions();
 		movimentation();
 		touchWall();
 		narutoColision();
@@ -174,7 +174,7 @@ public class Game extends JPanel implements  KeyListener, ActionListener {
 		}
 	}
 
-	public void narutosasukeCollisions() {
+	public void narutoSasukeCollisions() {
 		if (sasuke.getXPosition() <= naruto.getXPosition() + naruto.getObjectWidth()) {
 			if (sasuke.getYPosition() >= naruto.getYPosition()
 					&& sasuke.getYPosition() <= naruto.getYPosition() + naruto.getHeight()) {
