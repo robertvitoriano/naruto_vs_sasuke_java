@@ -4,14 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -37,14 +35,17 @@ public class Main extends JPanel implements Runnable, KeyListener {
     GameObject background;
     Clip mainMusicClip;
 
+    Double narutoXPosition = 0.02;
+    Double sasukeXPosition = 0.86;
+
     public static void main(String[] args) throws Exception {
         JFrame screen = new JFrame("Naruto vs Sasuke - by Robert Vitoriano");
-        screen.setSize((int)Math.round(width), (int)Math.round(height));
+        screen.setSize((int) Math.round(width), (int) Math.round(height));
         screen.setVisible(true);
         screen.setLocationRelativeTo(null);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Main canvas = new Main();
-        canvas.setBounds(0, 0, (int)Math.round(width), (int)Math.round(height));
+        canvas.setBounds(0, 0, (int) Math.round(width), (int) Math.round(height));
         canvas.setVisible(true);
         screen.setLayout(null);
         screen.add(canvas);
@@ -62,13 +63,13 @@ public class Main extends JPanel implements Runnable, KeyListener {
         AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
         mainMusicClip = AudioSystem.getClip();
         mainMusicClip.open(audioIn);
-        FloatControl gainControl = (FloatControl) mainMusicClip.getControl(FloatControl.Type.MASTER_GAIN);        
+        FloatControl gainControl = (FloatControl) mainMusicClip.getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(20f * (float) Math.log10(0.2));
         mainMusicClip.loop(Clip.LOOP_CONTINUOUSLY);
 
         background = new GameObject("konoha_background.jpg", 0.0, 0.0, width, height);
-        naruto = new GameObject("mini_naruto.png", 10.0, 140.0, 100.0, 140.0);
-        sasuke = new GameObject("mini_sasuke.png", (width * 0.9), 190.0, 100.0, 140.0);
+        naruto = new GameObject("mini_naruto.png", (width * narutoXPosition), 140.0, 100.0, 140.0);
+        sasuke = new GameObject("mini_sasuke.png", (width * sasukeXPosition), 190.0, 100.0, 140.0);
 
         life = new GameObject("heart-icon.png", 0.0, 23.0, 25.0, 25.0);
         sasuke.setSpeedX(2);
@@ -170,8 +171,8 @@ public class Main extends JPanel implements Runnable, KeyListener {
     public void touchWall() {
         if (sasuke.getXPosition() <= 0) {
             lives -= 1;
-            sasuke.setYPosition(Double.valueOf(randomNumber.nextInt((int)Math.round((400.0) + 30.0))));
-            sasuke.setXPosition(Double.valueOf(randomNumber.nextInt((int)Math.round((250.0) + 200.0))));
+            sasuke.setYPosition(Double.valueOf(randomNumber.nextInt((int) Math.round((400.0) + 30.0))));
+            sasuke.setXPosition(Double.valueOf(randomNumber.nextInt((int) Math.round((250.0) + 200.0))));
             try {
                 playSound("missedSound.wav");
             } catch (Exception e) {
@@ -232,7 +233,7 @@ public class Main extends JPanel implements Runnable, KeyListener {
     }
 
     public void sasukeCollisions() {
- 
+
         // sasuke.setXPosition(sasuke.getXPosition() + sasuke.getSpeedX());
         sasuke.setYPosition(sasuke.getYPosition() + sasuke.getSpeedY());
         if (sasuke.getXPosition() >= width - 25 || sasuke.getXPosition() <= 0) {
@@ -244,26 +245,25 @@ public class Main extends JPanel implements Runnable, KeyListener {
             // playHitWallSound();
 
         }
-        if (sasuke.getSpeedX() < 0){
+        if (sasuke.getSpeedX() < 0) {
             sasuke.setSpeedAbsoluteX(-sasuke.getSpeedX());
             // playHitWallSound();
         }
-            
-        else{
+
+        else {
             sasuke.setSpeedAbsoluteX(sasuke.getSpeedX());
             // playHitWallSound();
         }
-        if (sasuke.getSpeedY() < 0){
+        if (sasuke.getSpeedY() < 0) {
             sasuke.setSpeedAbsoluteY(-sasuke.getSpeedY());
             // playHitWallSound();
-        }
-        else{
+        } else {
             sasuke.setSpeedAbsoluteY(sasuke.getSpeedY());
             // playHitWallSound();
         }
     }
 
-    public void playHitWallSound(){
+    public void playHitWallSound() {
         try {
             if (hitWallSound == 2) {
                 playSound("hitWall1.wav");
@@ -292,8 +292,6 @@ public class Main extends JPanel implements Runnable, KeyListener {
         }
     }
 
-
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         try {
@@ -319,11 +317,11 @@ public class Main extends JPanel implements Runnable, KeyListener {
 
     public void drawScore(Graphics g) {
         g.setColor(Color.BLUE);
-        g.drawString("Placar: " + score + " ponto(s)", (int)(width - 185),(int)40);
+        g.drawString("Placar: " + score + " ponto(s)", (int) (width - 185), (int) 40);
         if (bestScore > score) {
-            g.drawString("Melhor Pontuação: " + bestScore + " pontos", (int)(width - 185), (int)80);
+            g.drawString("Melhor Pontuação: " + bestScore + " pontos", (int) (width - 185), (int) 80);
         } else
-            g.drawString("Melhor Pontuação: " + score + " pontos", (int)(width - 185), (int)80);
+            g.drawString("Melhor Pontuação: " + score + " pontos", (int) (width - 185), (int) 80);
         if (pause == true) {
             g.setColor(Color.BLACK);
             g.drawString("Aperte espaço para voltar", 200, 200);
@@ -345,9 +343,9 @@ public class Main extends JPanel implements Runnable, KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             pause = !pause;
 
-            if(pause){
+            if (pause) {
                 mainMusicClip.stop();
-            }else {
+            } else {
                 mainMusicClip.loop(Clip.LOOP_CONTINUOUSLY);
             }
         }
