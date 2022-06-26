@@ -21,8 +21,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Main extends JPanel implements Runnable, KeyListener {
-    static int width = 1360;
-    static int height = 720;
+    static Double width = 1360.0;
+    static Double height = 720.0;
     int lives = 5;
     int initialLives = 5;
     int bestScore;
@@ -39,12 +39,12 @@ public class Main extends JPanel implements Runnable, KeyListener {
 
     public static void main(String[] args) throws Exception {
         JFrame screen = new JFrame("Naruto vs Sasuke - by Robert Vitoriano");
-        screen.setSize(width, height);
+        screen.setSize((int)Math.round(width), (int)Math.round(height));
         screen.setVisible(true);
         screen.setLocationRelativeTo(null);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Main canvas = new Main();
-        canvas.setBounds(0, 0, width, height);
+        canvas.setBounds(0, 0, (int)Math.round(width), (int)Math.round(height));
         canvas.setVisible(true);
         screen.setLayout(null);
         screen.add(canvas);
@@ -66,11 +66,11 @@ public class Main extends JPanel implements Runnable, KeyListener {
         gainControl.setValue(20f * (float) Math.log10(0.2));
         mainMusicClip.loop(Clip.LOOP_CONTINUOUSLY);
 
-        background = new Background("konoha_background.jpg", 0, 0, width, height);
-        naruto = new GameObject("mini_naruto.png", 10, 140, 100, 140);
-        sasuke = new GameObject("mini_sasuke.png", 450, 190, 100, 140);
+        background = new GameObject("konoha_background.jpg", 0.0, 0.0, width, height);
+        naruto = new GameObject("mini_naruto.png", 10.0, 140.0, 100.0, 140.0);
+        sasuke = new GameObject("mini_sasuke.png", (width * 0.9), 190.0, 100.0, 140.0);
 
-        life = new GameObject("heart-icon.png", 0, 23, 25, 25);
+        life = new GameObject("heart-icon.png", 0.0, 23.0, 25.0, 25.0);
         sasuke.setSpeedX(2);
         sasuke.setSpeedY(1);
         sasuke.setSpeedRate(2);
@@ -105,9 +105,9 @@ public class Main extends JPanel implements Runnable, KeyListener {
 
     public void narutoColision() {
         if (naruto.getYPosition() <= 0)
-            naruto.setYPosition(0);
+            naruto.setYPosition(0.0);
         else if (naruto.getYPosition() >= 380)
-            naruto.setYPosition(380);
+            naruto.setYPosition(380.0);
     }
 
     public void GameOver() {
@@ -155,13 +155,13 @@ public class Main extends JPanel implements Runnable, KeyListener {
         mainMusicClip.loop(Clip.LOOP_CONTINUOUSLY);
         lives = initialLives;
         score = 0;
-        sasuke.setXPosition(450);
-        sasuke.setYPosition(190);
+        sasuke.setXPosition(450.0);
+        sasuke.setYPosition(190.0);
         sasuke.setSpeedX(5);
         sasuke.setSpeedY(5);
         sasuke.setSpeedRate(2);
-        naruto.setXPosition(50);
-        naruto.setYPosition(140);
+        naruto.setXPosition(50.0);
+        naruto.setYPosition(140.0);
         naruto.setSpeed(3);
         naruto.setMovingUp(false);
         naruto.setMovingDown(false);
@@ -170,8 +170,8 @@ public class Main extends JPanel implements Runnable, KeyListener {
     public void touchWall() {
         if (sasuke.getXPosition() <= 0) {
             lives -= 1;
-            sasuke.setYPosition(randomNumber.nextInt(400) + 30);
-            sasuke.setXPosition(randomNumber.nextInt(250) + 200);
+            sasuke.setYPosition(Double.valueOf(randomNumber.nextInt((int)Math.round((400.0) + 30.0))));
+            sasuke.setXPosition(Double.valueOf(randomNumber.nextInt((int)Math.round((250.0) + 200.0))));
             try {
                 playSound("missedSound.wav");
             } catch (Exception e) {
@@ -199,7 +199,7 @@ public class Main extends JPanel implements Runnable, KeyListener {
     }
 
     public void narutosasukeCollisions() {
-        if (sasuke.getXPosition() <= naruto.getXPosition() + naruto.getWidth()) {
+        if (sasuke.getXPosition() <= naruto.getXPosition() + naruto.getObjectWidth()) {
             if (sasuke.getYPosition() >= naruto.getYPosition()
                     && sasuke.getYPosition() <= naruto.getYPosition() + naruto.getHeight()) {
                 if (bestScore < score)
@@ -233,7 +233,7 @@ public class Main extends JPanel implements Runnable, KeyListener {
 
     public void sasukeCollisions() {
  
-        sasuke.setXPosition(sasuke.getXPosition() + sasuke.getSpeedX());
+        // sasuke.setXPosition(sasuke.getXPosition() + sasuke.getSpeedX());
         sasuke.setYPosition(sasuke.getYPosition() + sasuke.getSpeedY());
         if (sasuke.getXPosition() >= width - 25 || sasuke.getXPosition() <= 0) {
             sasuke.setSpeedX(sasuke.getSpeedX() * -1);
@@ -309,7 +309,7 @@ public class Main extends JPanel implements Runnable, KeyListener {
 
     public void drawLives(Graphics g) throws Exception {
         for (int i = 0; i <= lives - 1; i++) {
-            life.setXPosition(60 + 25 * i);
+            life.setXPosition(Double.valueOf(60 + 25 * i));
             life.drawImage(g);
         }
         g.setColor(Color.BLUE);
@@ -319,11 +319,11 @@ public class Main extends JPanel implements Runnable, KeyListener {
 
     public void drawScore(Graphics g) {
         g.setColor(Color.BLUE);
-        g.drawString("Placar: " + score + " ponto(s)", width - 185, 40);
+        g.drawString("Placar: " + score + " ponto(s)", (int)(width - 185),(int)40);
         if (bestScore > score) {
-            g.drawString("Melhor Pontuação: " + bestScore + " pontos", width - 185, 80);
+            g.drawString("Melhor Pontuação: " + bestScore + " pontos", (int)(width - 185), (int)80);
         } else
-            g.drawString("Melhor Pontuação: " + score + " pontos", width - 185, 80);
+            g.drawString("Melhor Pontuação: " + score + " pontos", (int)(width - 185), (int)80);
         if (pause == true) {
             g.setColor(Color.BLACK);
             g.drawString("Aperte espaço para voltar", 200, 200);

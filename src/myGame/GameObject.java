@@ -12,15 +12,16 @@ public class GameObject extends JPanel {
   BufferedImage image = null;
   Color color = null;
   String imagePath;
-  int xPosition;
-  int yPosition;
-  int width;
-  int height;
+  Double xPosition;
+  Double yPosition;
+  Double width;
+  Double height;
   int speed = 4;
   int size = 0;
   int speedRate = 1;
   int speedX = 0;
   int speedY = 0;
+
   public int getSpeedAbsoluteX() {
     return speedAbsoluteX;
   }
@@ -44,6 +45,41 @@ public class GameObject extends JPanel {
   boolean movingLeft;
   boolean movingRight;
 
+  public GameObject(String imagePath,
+      Double xPosition,
+      Double yPosition,
+      Double width,
+      Double height) {
+    this.imagePath = imagePath;
+    this.xPosition = xPosition;
+    this.yPosition = yPosition;
+    this.width = width;
+    this.height = height;
+    readImage();
+  }
+
+  public GameObject(Color color,
+      Double xPosition,
+      Double yPosition,
+      Double width,
+      Double height) {
+    this.color = color;
+    this.xPosition = xPosition;
+    this.yPosition = yPosition;
+    this.width = width;
+    this.height = height;
+  }
+
+  public GameObject(String imagePath, Double width, Double height) {
+    this.imagePath = imagePath;
+    this.width = width;
+    this.height = height;
+  }
+
+  public GameObject(String imagePath) {
+    this.imagePath = imagePath;
+  }
+
   public int getSpeedX() {
     return speedX;
   }
@@ -59,6 +95,7 @@ public class GameObject extends JPanel {
   public void setSpeedY(int speedY) {
     this.speedY = speedY;
   }
+
   public int getComponentSize() {
     return size;
   }
@@ -81,41 +118,6 @@ public class GameObject extends JPanel {
 
   public void setMovingRight(boolean movingRight) {
     this.movingRight = movingRight;
-  }
-
-  public GameObject(String imagePath,
-      int xPosition,
-      int yPosition,
-      int width,
-      int height) {
-    this.imagePath = imagePath;
-    this.xPosition = xPosition;
-    this.yPosition = yPosition;
-    this.width = width;
-    this.height = height;
-    readImage();
-  }
-
-  public GameObject(Color color,
-      int xPosition,
-      int yPosition,
-      int width,
-      int height) {
-    this.color = color;
-    this.xPosition = xPosition;
-    this.yPosition = yPosition;
-    this.width = width;
-    this.height = height;
-  }
-
-  public GameObject(String imagePath, int width, int height) {
-    this.imagePath = imagePath;
-    this.width = width;
-    this.height = height;
-  }
-
-  public GameObject(String imagePath) {
-    this.imagePath = imagePath;
   }
 
   public int getSpeedRate() {
@@ -155,23 +157,23 @@ public class GameObject extends JPanel {
     return image;
   }
 
-  public int getXPosition() {
+  public Double getXPosition() {
     return xPosition;
   }
 
-  public int getWidth() {
+  public Double getObjectWidth() {
     return width;
   }
 
-  public int getHeight() {
+  public Double getObjectHeight() {
     return height;
   }
 
-  public void setXPosition(int XPosition) {
+  public void setXPosition(Double XPosition) {
     this.xPosition = XPosition;
   }
 
-  public void setYPosition(int YPosition) {
+  public void setYPosition(Double YPosition) {
     this.yPosition = YPosition;
   }
 
@@ -179,15 +181,15 @@ public class GameObject extends JPanel {
     this.speed = speed;
   }
 
-  public int getYPosition() {
+  public Double getYPosition() {
     return yPosition;
   }
 
-  public void setWidth(int width) {
+  public void setWidth(Double width) {
     this.width = width;
   }
 
-  public void setHeight(int height) {
+  public void setHeight(Double height) {
     this.height = height;
   }
 
@@ -200,8 +202,8 @@ public class GameObject extends JPanel {
       if (image == null) {
         throw new Exception("Image not found");
       }
-      g.drawImage(image, xPosition, yPosition, width,
-          height, null);
+      g.drawImage(image, (int) Math.round(xPosition), (int) Math.round(yPosition), (int) Math.round(width),
+          (int) Math.round(height), null);
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -211,6 +213,6 @@ public class GameObject extends JPanel {
 
   public void drawOval(Graphics g) {
     g.setColor(color);
-    g.fillOval(xPosition, yPosition, size, size);
+    g.fillOval((int) Math.round(xPosition), (int) Math.round(yPosition), size, size);
   }
 }
